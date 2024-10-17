@@ -45,69 +45,79 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              TextField(
-                controller: titleController,
-                onSubmitted: (_) => _submitForm(),
-                decoration: const InputDecoration(
-                  labelText: 'Título',
+    return SingleChildScrollView(
+      child: Card(
+          elevation: 5,
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: 10,
+                right: 10,
+                left: 10,
+                bottom: 10 +
+                    MediaQuery.of(context)
+                        .viewInsets
+                        .bottom // leva em consideracao a abertura do teclado
                 ),
-              ),
-              TextField(
-                controller: valueController,
-                keyboardType: const TextInputType.numberWithOptions(
-                    decimal:
-                        true), // o ".number" poderia atender, mas no IOS iria faltar os separadores de casas decimais
-                onSubmitted: (_) =>
-                    _submitForm(), // (_) significa que o parametro passado na função será ignorado
-                decoration: const InputDecoration(
-                  labelText: 'Valor (R\$)',
+            child: Column(
+              children: [
+                TextField(
+                  controller: titleController,
+                  onSubmitted: (_) => _submitForm(),
+                  decoration: const InputDecoration(
+                    labelText: 'Título',
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 70,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        _selectedDate == null
-                            ? 'Nenhuma data selecionada!'
-                            : 'Data Selecionada: ${DateFormat('dd/MM/y').format(_selectedDate!)}',
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: _showDatePicker,
-                      child: const Text(
-                        'Selecionar Data',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                TextField(
+                  controller: valueController,
+                  keyboardType: const TextInputType.numberWithOptions(
+                      decimal:
+                          true), // o ".number" poderia atender, mas no IOS iria faltar os separadores de casas decimais
+                  onSubmitted: (_) =>
+                      _submitForm(), // (_) significa que o parametro passado na função será ignorado
+                  decoration: const InputDecoration(
+                    labelText: 'Valor (R\$)',
+                  ),
+                ),
+                SizedBox(
+                  height: 70,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          _selectedDate == null
+                              ? 'Nenhuma data selecionada!'
+                              : 'Data Selecionada: ${DateFormat('dd/MM/y').format(_selectedDate!)}',
                         ),
                       ),
-                    )
-                  ],
+                      TextButton(
+                        onPressed: _showDatePicker,
+                        child: const Text(
+                          'Selecionar Data',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: _submitForm,
-                    child: Text(
-                      'Nova Transação',
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.labelLarge?.color,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _submitForm,
+                      child: Text(
+                        'Nova Transação',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.labelLarge?.color,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ));
+                  ],
+                )
+              ],
+            ),
+          )),
+    );
   }
 }
